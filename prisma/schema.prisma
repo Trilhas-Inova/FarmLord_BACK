@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,12 +9,14 @@ datasource db {
 
 model User {
   id       String   @id @default(uuid())
-  name     String
-  birthday DateTime
   username String   @unique
   email    String   @unique
   password String
+  fullname String
+  birthday DateTime?
+  role     String?
   games    Game[]
+  answers  Answer[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -29,14 +25,61 @@ model User {
 }
 
 model Game {
-  id  String  @id @default(uuid())
-  won Boolean
+  id       String    @id @default(uuid())
+  playerId String
+  startIn  DateTime
+  endIn    DateTime?
 
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  player User @relation(fields: [playerId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("game")
+}
+
+model Question {
+  id       String   @id @default(uuid())
+  cardText String
+  actions  Action[]
+  answers  Answer[]
+
+  @@map("questions")
+}
+
+model Action {
+  id                 String              @id @default(uuid())
+  questionId         String
+  text               String
+  statsModifications StatsModification[]
+
+  question Question @relation(fields: [questionId], references: [id])
+
+  @@map("actions")
+}
+
+model Answer {
+  id           String @id @default(uuid())
+  playerId     String
+  cardId       String
+  chosenAnswer String
+  impact       Int
+
+  user     User     @relation(fields: [playerId], references: [id])
+  question Question @relation(fields: [cardId], references: [id])
+
+  @@map("answers")
+}
+
+model StatsModification {
+  id           String @id @default(uuid())
+  actionId     String
+  production   Int
+  logistics    Int
+  economy      Int
+  satisfaction Int
+
+  action Action @relation(fields: [actionId], references: [id])
+
+  @@map("stats_modification")
 }
