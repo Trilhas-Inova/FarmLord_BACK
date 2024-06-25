@@ -16,7 +16,7 @@ class UserService {
     async get() {
         const users = await this.prisma.user.findMany({
             select: {
-                id:true,
+                id: true,
                 email: true,
                 username: true,
                 birthday: true,
@@ -24,6 +24,25 @@ class UserService {
         });
 
         return resp(200, users);
+    };
+
+    async getOne(id: string) {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id: id
+            },
+            select: {
+                id: true,
+                email: true,
+                username: true,
+                birthday: true,
+                games:true,
+                role:true
+            },
+        });
+        if(!user)return resp(404,'user not found')
+
+        return resp(200, user);
     };
 
     async login(body: { email: string, password: string }) {

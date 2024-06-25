@@ -12,6 +12,16 @@ class UserController {
             next(error);
         }
     }
+    async getOne(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { status, message } = await this.service.getOne(req.params.id);
+            res.status(status).json(message);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+
 
 
     async login(req: Request, res: Response, next: NextFunction) {

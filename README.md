@@ -21,7 +21,7 @@
 ### [acessar em  http://localhost:3000 ](http://localhost:3000)
 
 
-## Endpoints
+## Endpoints users
 
 ### Registrar
 
@@ -82,5 +82,23 @@ retorno:
 		"birthday": "dd/mm/yyyy"
 	}
 ]
+
+```
+
+### getOne by id
+
+GET http://localhost:3000/user/:id
+
+retorno:
+```bash
+{ 
+	"id": "UUID"
+	"email": "mail@mail.com",
+	"username": "username",
+	"birthday": "dd/mm/yyyy",
+	"games": [],
+	"role": "role"
+}
+
 
 ```

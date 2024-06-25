@@ -9,6 +9,10 @@ app.use(cors());
 app.use(router);
 
 
+app.get('/', (req: Request, res: Response) => {
+    res.status(200).json("welcome to farmlord API");
+})
+
 //middleware de erro
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     return res.status(500).json({ erroName: err.name, message: err.message });
