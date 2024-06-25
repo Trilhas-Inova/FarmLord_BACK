@@ -12,8 +12,8 @@ model User {
   username String   @unique
   email    String   @unique
   password String
-  fullname String
-  birthday DateTime?
+  fullname String?
+  birthday String?   @default("00/00/0000")
   role     String?
   games    Game[]
   answers  Answer[]

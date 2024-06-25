@@ -25,14 +25,14 @@
 
 ### Registrar
 
-http://localhost:3000/register
+POST http://localhost:3000/register
 
 ```bash
 { 
 	"username": "username",
 	"email": "mail@mail.com",
 	"password": "123456789",
-	"fullname": "full name"
+	"birthday": "dd/mm/yyyy"
 }
 
 ```
@@ -40,9 +40,9 @@ retorno:
 ```bash
 { 
     "id": "UUID"
-	"fullname": "full name"
-	"username": "username",
-	"email": "mail@mail.com"
+	"birthday": "dd/mm/yyyy",
+	"email": "mail@mail.com",
+	"username": "username"
 }
 
 ```
@@ -50,7 +50,7 @@ retorno:
 
 ### Login
 
-http://localhost:3000/login
+POST  http://localhost:3000/login
 
 ```bash
 {
@@ -68,3 +68,19 @@ retorno:
 
 ```
 
+### getAll
+
+GET http://localhost:3000/user
+
+retorno:
+```bash
+[
+	{ 
+		"id": "UUID"
+		"email": "mail@mail.com",
+		"username": "username",
+		"birthday": "dd/mm/yyyy"
+	}
+]
+
+```

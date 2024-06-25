@@ -16,7 +16,7 @@ class UserService {
     async get() {
         const users = await this.prisma.user.findMany({
             select: {
-                fullname: true,
+                id:true,
                 email: true,
                 username: true,
                 birthday: true,
@@ -51,7 +51,7 @@ class UserService {
             return resp(400, { message: bodyParse.error.message })
         }
 
-        const { fullname, username, email, password } = body;
+        const { username, birthday, email, password } = body;
 
         const user = await this.prisma.user.findUnique({ where: { email: email } })
         if (user) return resp(400, 'email is already register');
@@ -65,13 +65,13 @@ class UserService {
 
         const createdUser = await this.prisma.user.create({
             data: {
-                fullname: fullname,
-                username: username,
-                email: email,
-                password: hashPassword,
+                username,
+                birthday,
+                email,
+                password: hashPassword
             }, select: {
                 id: true,
-                fullname: true,
+                birthday: true,
                 email: true,
                 username: true,
 
